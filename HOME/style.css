@@ -80,7 +80,7 @@ section {
 }
 #slide img{
   background-color: black;
-  filter: brightness(15%);
+  filter: brightness(20%);
   width: 100%;
   height: 65vh;
   object-fit: cover;
@@ -234,7 +234,7 @@ input{
   font-size: 20px;
   padding: 10px;
 }
-button{
+#submit{
   width: 80%;
   height: 5vh;
   border: none;
