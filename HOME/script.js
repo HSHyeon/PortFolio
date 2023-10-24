@@ -31,12 +31,12 @@ slider.addEventListener('transitionend', ()=> {
     if(images[current].classList.contains('first-img')){
         slider.style.transition = 'none';
         current = images.length - 2;
-       // slider.style.transform = `translateX(${-imgSize * current}px)`;
+        slider.style.transform = `translateX(${-imgSize * current}px)`;
     }
     if(images[current].classList.contains('last-img')){
         slider.style.transition = 'none';
         current = images.length - current ;
-      //  slider.style.transform = `translateX(${-imgSize * current}px)`;
+        slider.style.transform = `translateX(${-imgSize * current}px)`;
     }
 })
 
@@ -48,24 +48,23 @@ const next = () => {
   
 }
 
-let auto = setInterval(next, 3000);
+let auto = setInterval(next, 4000);
 
 slider.addEventListener('mouseleave', ()=>{
-    auto = setInterval(next, 3000)
+    auto = setInterval(next, 4000)
 })
 
 slider.addEventListener('mouseenter', ()=>{
     clearInterval(auto)
 })
 
-nextBtn.addEventListener('click', () => {
-  next()
-})
+
 
 const list = document.querySelector('.memos');
 
 const input = document.getElementById('board_input');
 const submit= document.getElementById('submit');
+
 let str = localStorage.getItem('memo');
 
 if(str){
@@ -75,8 +74,9 @@ if(str){
     if(arr[i] != "null"){
       const html = `<li class="list-group-item ">
   <span>${arr[i]}</span>
-  <i class="far fa-trash-alt delete"></i>
-</li>`
+  <i class="far fa-trash-alt delete"></i><button class="btn btn-danger" onclick="deleteUser('<%= users[i]._id %>')">Delete</button>
+</li> 
+`
   list.innerHTML += html;
 }
 }}
@@ -93,7 +93,7 @@ submit.addEventListener('click', e =>{
     saveMemo(memo);   
     input.value = '';
     str = str + " " + memo;
-    localStorage.setItem('memo', str);
+    //localStorage.setItem('memo', str);
  
 }
 
@@ -103,8 +103,9 @@ submit.addEventListener('click', e =>{
 const saveMemo = memotext => {
   const html = `<li class="list-group-item ">
   <span>${memotext}</span>
-  <i class="far fa-trash-alt delete"></i>
-</li>`
+ 
+</li> 
+`
   list.innerHTML += html;
 }
 
