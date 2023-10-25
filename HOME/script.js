@@ -7,8 +7,11 @@ const nextBtn = document.querySelector('.rightBtn');
 let current = 1;
 const imgSize = images[0].clientWidth;
 
-slider.style.transform = `translateX(${-imgSize}px)`;
+window.onload = function () {
+  loadComments();
+};
 
+slider.style.transform = `translateX(${-imgSize}px)`;
 prevBtn.addEventListener('click',()=>{
 
   console.log(current);
@@ -61,44 +64,67 @@ slider.addEventListener('mouseenter', ()=>{
 
 
 const list = document.querySelector('.memos');
-
-const input = document.getElementById('board_input');
+const username = document.getElementById('input_name');
+const input = document.getElementById('input_board');
 const submit= document.getElementById('submit');
-
-let str = localStorage.getItem('memo');
-
-if(str){
-  let arr = str.split(" ");
-  for(let i=0;i<arr.length;i++)
-  {
-    if(arr[i] != "null"){
-      const html = `<li class="list-group-item ">
-  <span>${arr[i]}</span>
-  <i class="far fa-trash-alt delete"></i><button class="btn btn-danger" onclick="deleteUser('<%= users[i]._id %>')">Delete</button>
-</li> 
-`
-  list.innerHTML += html;
-}
-}}
 
 
 
 submit.addEventListener('click', e =>{
   e.preventDefault();
   const memo = input.value;
+  const name = username.value;
+  
+  let newComment = {
+    user: name,
+    review: memo,
+  };
+  
+  let comments = getComments();
 
-  console.log(str);
-  if(memo.length){
-   
-    saveMemo(memo);   
-    input.value = '';
-    str = str + " " + memo;
-    //localStorage.setItem('memo', str);
- 
+  comments.push(newComment);
+  
+  localStorage.setItem('comments', JSON.stringify(comments));
+  loadComments();
+  username.value = '';
+  input.value='';
+})
+
+
+
+function getComments() {
+  let comments = localStorage.getItem('comments');
+
+  if (comments) {
+    return JSON.parse(comments);
+  } else {
+    return [];
+  }
 }
 
+function loadComments() {
 
-})
+  list.innerHTML = '';
+
+  let comments = getComments();
+
+  for (let i = 0; i < comments.length; i++) {
+    let comment = comments[i];
+
+    const html =
+    `
+  <li class="list-group-item">
+  <span>
+  <span class="comment_name">${comment.user}</span>
+  <span class="comment">${comment.review}</span></span>
+  <i class="far fa-trash-alt delete"></i>
+</li>
+  `
+     // '<strong>' + comment.user + ':</strong> ' + comment.review;
+
+     list.innerHTML += html;
+  }
+}
 
 const saveMemo = memotext => {
   const html = `<li class="list-group-item ">
@@ -109,3 +135,28 @@ const saveMemo = memotext => {
   list.innerHTML += html;
 }
 
+
+
+list.addEventListener('click',e => {
+  if(e.target.classList.contains('delete')){
+      e.target.parentElement.remove();
+
+      let comments = getComments();
+      let username = e.target.parentElement.childNodes[1].childNodes[1].innerHTML;
+      let contents = e.target.parentElement.childNodes[1].childNodes[3].innerHTML;
+
+      comments.forEach((item, index)=>{
+        if(item.user ===username &&item.review ===contents){
+          comments.splice(index, 1);
+        }
+      })
+  localStorage.setItem('comments', JSON.stringify(comments));
+  loadComments();
+
+    console.log(comments);
+      
+  }
+
+
+
+});

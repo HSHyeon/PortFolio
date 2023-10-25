@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
+    <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+    crossorigin="anonymous"
+  />
+
    <link rel="stylesheet" href="./style.css" />
    
     <script
@@ -25,7 +31,7 @@
             
             <li>
               <a href="https://github.com/hshyeon" target="_blank">
-                 <i class="fa-brands fa-github" style="color: #999999;">g</i></a>
+                 <i class="github" style="color: #999999;">g</i></a>
             </li>
           </ul>
         </nav>
@@ -151,15 +157,19 @@
     <div id="board" class="board">
       BOARD<br><br><br>
    <form method="post" name="board" id="board"> 
-    <input type="text" id="board_input">
+    <input type="text" id="input_name" value= "username" >
+    <input type="text" id="input_board">
     <button type="button" id="submit">SUBMIT</button>
 </form>
 
 <ul class="list-group memos">
   <li class="list-group-item">
-    <span>잘 보고 갑니다</span>
-  
+    <span>
+    <span class="comment_name">이름</span>
+    <span class="comment">잘 보고 갑니다~</span></span>
+    <i class="far fa-trash-alt delete"></i>
   </li>
+  
 </ul>
 </div>
         </section>
